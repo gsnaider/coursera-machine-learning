@@ -74,4 +74,4 @@ print('For population = 70,000, we predict a profit of %f' % (predict2*10000));
 input('Program paused. Press enter to continue.');
 
 # ============= Part 4: Visualizing J(theta_0, theta_1) =============
-
+# TODO
