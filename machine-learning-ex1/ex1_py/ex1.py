@@ -48,7 +48,7 @@ print()
 print('With theta = [-1 ; 2]\nCost computed = %f\n' % J);
 print('Expected cost value (approx) 54.24');
 
-print('Program paused. Press enter to continue.');
+input('Program paused. Press enter to continue.');
 
 # run gradient descent
 theta = gradient_descent(X, y, theta, alpha, iterations);
@@ -61,9 +61,9 @@ print(' -3.6303\n 1.1664');
 
 # Plot the linear fit
 plt.plot(X[:,1], y, 'rx')
-plt.plot(X[:,1], X * theta, '-')
+plt.plot(X[:,1], X.dot(theta), '-')
 plt.legend(['Training data', 'Linear regression'])
-
+plt.show()
 
 # Predict values for population sizes of 35,000 and 70,000
 predict1 = np.array([1, 3.5]).dot(theta);
@@ -71,7 +71,7 @@ print('For population = 35,000, we predict a profit of %f' % (predict1*10000));
 predict2 = np.array([1, 7]).dot(theta);
 print('For population = 70,000, we predict a profit of %f' % (predict2*10000));
 
-print('Program paused. Press enter to continue.');
+input('Program paused. Press enter to continue.');
 
 # ============= Part 4: Visualizing J(theta_0, theta_1) =============
 
