@@ -15,5 +15,7 @@ def sigmoid(z):
 	return 1 / (1 + np.exp(-z))
 
 def cost(theta, X, y):
-
-	return (0, np.zeros(X.shape[1]))
+	m = y.shape[0]
+	J = -1 / m * (y.T.dot(np.log(sigmoid(X.dot(theta)))) + (1 -y).T.dot(np.log(1 - sigmoid(X.dot(theta)))))
+	grad = 1 / m * X.T.dot(sigmoid(X.dot(theta)) - y)
+	return (J, grad)
