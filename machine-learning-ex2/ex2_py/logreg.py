@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 
 def plot_data(X, y):
@@ -9,3 +10,10 @@ def plot_data(X, y):
 	plt.ylabel('Exam 2 score')
 	plt.legend(['Admitted','Not admitted'])
 	plt.show()
+
+def sigmoid(z):
+	return 1 / (1 + np.exp(-z))
+
+def cost(theta, X, y):
+
+	return (0, np.zeros(X.shape[1]))
