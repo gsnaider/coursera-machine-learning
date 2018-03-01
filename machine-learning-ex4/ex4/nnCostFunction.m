@@ -72,6 +72,7 @@ for t = 1:m
 end;
 y = y_bin;
 
+% Compute cost function via feedforward
 J = 0;
 for t = 1:m
 	z2 = Theta1 * X(t,:)';
@@ -86,7 +87,6 @@ J = J / m;
 
 
 % Add regularization
-
 J = J + lambda / (2*m) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)));
 
 
