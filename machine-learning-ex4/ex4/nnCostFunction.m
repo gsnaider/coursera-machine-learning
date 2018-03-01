@@ -62,16 +62,27 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Add column of zeros to X
+X = [ones(m,1), X];
 
+% Map y to binary vectors
+y_bin = zeros(m, num_labels);
+for t = 1:m
+	y_bin(t,y(t)) = 1;
+end;
+y = y_bin;
 
+J = 0;
+for t = 1:m
+	z2 = Theta1 * X(t,:)';
+	a2 = sigmoid(z2);
+	a2 = [1; a2];
+	z3 = Theta2 * a2;
+	h = sigmoid(z3);
 
-
-
-
-
-
-
-
+	J = J - y(t,:) * log(h) - (1 - y(t,:)) * log(1 - h);
+end;
+J = J / m;
 
 
 
