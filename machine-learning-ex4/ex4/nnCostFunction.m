@@ -72,18 +72,32 @@ for t = 1:m
 end;
 y = y_bin;
 
-% Compute cost function via feedforward
+% Compute cost function via feedforward and grad via backpropagation
 J = 0;
 for t = 1:m
-	z2 = Theta1 * X(t,:)';
+	a1 = X(t,:)';
+	z2 = Theta1 * a1;
 	a2 = sigmoid(z2);
 	a2 = [1; a2];
 	z3 = Theta2 * a2;
 	h = sigmoid(z3);
 
 	J = J - y(t,:) * log(h) - (1 - y(t,:)) * log(1 - h);
+
+	delta3 = h - y(t,:)';
+
+	delta2 = Theta2' * delta3;
+	delta2 = delta2(2:end);
+	delta2 = delta2 .* sigmoidGradient(z2);
+
+	Theta2_grad = Theta2_grad + delta3 * a2';
+	Theta1_grad = Theta1_grad + delta2 * a1';
+	
 end;
 J = J / m;
+
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
 
 
 % Add regularization
