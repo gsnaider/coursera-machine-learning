@@ -96,8 +96,10 @@ for t = 1:m
 end;
 J = J / m;
 
-Theta1_grad = Theta1_grad / m;
-Theta2_grad = Theta2_grad / m;
+Theta1_grad = [Theta1_grad(:,1) / m,...                                   % j = 0
+			   Theta1_grad(:,2:end) / m + lambda / m * Theta1(:,2:end)];  % j > 0
+Theta2_grad = [Theta2_grad(:,1) / m,...                                   % j = 0
+			   Theta2_grad(:,2:end) / m + lambda / m * Theta2(:,2:end)];  % j > 0
 
 
 % Add regularization
