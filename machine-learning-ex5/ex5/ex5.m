@@ -229,3 +229,37 @@ disp('Theta found using best lambda:');
 disp(theta);
 error_test = linearRegCostFunction(X_poly_test, ytest, theta, 0);
 fprintf('Error from test set: %f\n', error_test);
+
+%% =========== Part 10: Plotting learning curves with randomly selected examples =============
+
+samples = 50;
+lambda = 0.01;
+
+m_train = size(y);
+m_val = size(yval);
+m_test = size(ytest);
+
+X_poly = [X_poly; X_poly_val; X_poly_test];
+y = [y; yval; ytest];
+
+m = size(y);
+for i = 1:samples
+    randIds = randperm(m);
+    X_poly_train = X_poly(randIds(1:m_train), :);
+    X_poly_val = X_poly(randIds(m_train + 1:m_train + m_test), :);
+    X_poly_test = X_poly(randIds(m_train + m_test + 1:end), :);
+
+    ytrain = y(randIds(1:m_train), :);
+    yval = y(randIds(m_train + 1:m_train + m_test), :);
+    ytest = y(randIds(m_train + m_test + 1:end), :);
+
+    [error_train, error_val] = ...
+        learningCurve(X_poly, y, X_poly_val, yval, lambda);
+
+end
+
+plot(1:m, error_train, 1:m, error_val);
+xlabel('Number of training examples')
+ylabel('Error')
+axis([0 13 0 100])
+legend('Train', 'Cross Validation')
