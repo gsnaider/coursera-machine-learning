@@ -21,7 +21,12 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = size(X,1);
 
+for i = 1:m
+	[min_dist, min_centroid] = min(norm(X(i,:) - centroids, 'rows'));
+	idx(i) = min_centroid;
+end
 
 
 
