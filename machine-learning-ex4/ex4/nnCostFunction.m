@@ -62,7 +62,7 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% Add column of zeros to X
+% Add column of ones to X
 X = [ones(m,1), X];
 
 % Map y to binary vectors
