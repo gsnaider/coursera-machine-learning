@@ -154,12 +154,29 @@ def nn_cost_function(nn_params, input_layer_size, hidden_layer_size, num_labels,
     delta_output = h - y
     delta_hidden = delta_output.dot(theta2[:, 1:]) * sigmoid_gradient(z2).T
 
+    # The grad is not taking into account the regularization term. See how to fix.
     theta1_grad = 1 / m * a1.dot(delta_hidden).T
     theta2_grad = 1 / m * a2.dot(delta_output).T
 
     grad = np.append(theta1_grad.ravel(), theta2_grad.ravel())
 
     return (J, grad)
+
+
+def gradient_descent(cost_fun, initial_nn_params, step, max_iters):
+    nn_params = initial_nn_params
+    costs = []
+    for i in range(max_iters):
+        (cost, grad) = cost_fun(nn_params)
+        costs.append(cost)
+        nn_params = nn_params - step * grad
+
+    x = np.arange(len(costs))
+    plt.plot(x, costs)
+    plt.xlabel("Iteration")
+    plt.ylabel("Cost")
+    plt.show()
+    return (nn_params, costs[-1])
 
 
 def predict(theta1, theta2, X):
@@ -314,9 +331,13 @@ cost_fun = functools.partial(nn_cost_function, input_layer_size=input_layer_size
                              hidden_layer_size=hidden_layer_size, num_labels=num_labels, X=X, y=y,
                              reg_param=reg_param)
 res = minimize(cost_fun, initial_nn_params, method='TNC', jac=True, options={'maxiter': 500})
-
 nn_params = res.x
 J = res.fun
+
+# step = 0.003
+# (nn_params, J) = gradient_descent(cost_fun, initial_nn_params, step, max_iters=700)
+
+print('Minimized cost: %f' % J)
 
 # Obtain Theta1 and Theta2 back from nn_params
 theta1 = np.reshape(nn_params[:hidden_layer_size * (input_layer_size + 1)],
